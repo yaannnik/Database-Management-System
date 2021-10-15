@@ -1,0 +1,65 @@
+HW2 README
+COMS W4111
+
+Yi Yang
+yy3089
+
+This project contains the following files:
+
+README.md
+
+CSVCatalog.py
+CSVTable.py
+DataTableExceptions.py
+
+unit_test_catalog.py: The test file provided and any additional tests your write.
+unit_test_catalog.txt: A file containing the execution of your tests.
+unit_test_csv_table.py: A test file provided and any additional tests you write.
+unit_test_csv_table.txt: A file containing the execution of your tests.
+
+People.csv
+Appearances.csv
+Batting.csv
+
+create.sql: SQL statements to create tables and constraints for the catalog.
+
+
+CSVCatalog: Creates the methods that interact with the SQL database to store the metadata tables
+This ensures table integrity is kept using MySQL rather than implementing integrity constraints ourselves. 
+
+Note: The create statements provided in create.sql must be run before executing CSVCatalog to ensure metadata tables are created correctly.
+
+In CSVCatalog there are 4 classes created: ColumnDefinition, IndexDefinition, TableDefinition, and CSVCatalog.
+CSV Catalog is the class the creates, drops, and loads a table.
+A table definition is defined by file name and columns and indexes on those columns. These are created and column and index objects in ColumnDefiniton and IndexDefiniton.
+
+CSVTable is the file that loads the metadata and csvfiles for specific tables. It is where the joins are created and acts more like a traditional MySQL workbench where you can access rows of data based off certain fields and join tables together. Find by template both via an index and a table scan has been implemented as well. 
+
+DataTableExceptions is a given file that raises specific exceptions.
+
+There are four test files, one testing and one containing the results of the tests for both the CSVTable and CSVCatalog. 
+
+The data attached which was used in testing are People.csv, Appearances.csv, and Batting.csv.
+The indexes you should define and test (at a minimum) are:
+	People: playerID as PK people
+			nameLast, nameFirst as last_first
+
+	Batting: playerID, stint, yearID as PK batting
+			 yearID as YearID
+
+	Appearances: yearID, teamID, playerID as PK appearances
+
+One of the methods in unit_test_csv_table.py will create the indexes mentioned above. To add additional indexes follow the same method. 
+
+Note all test only on three tables: People, Appearances, and Batting. These csv files can be found in this zip as well.
+
+Finally this folder contains the create.sql file which will create the metadata schema required for running CSVCatalog as mentioned previously.
+Please run this file first as the metadata tables must be created properly before anything else will work.
+
+Put any information you would like us to read below this line.
+You should include any helper methods you added, additional tests your ran, additional features, and any issues/errors.
+_________________________________________________________________________________
+
+
+
+

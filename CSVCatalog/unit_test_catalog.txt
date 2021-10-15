@@ -1,0 +1,31 @@
+unit_test_catalog.txt
+
+Some example test outputs:
+
+-----------------------------------------------------------------------------------
+create_table_test()
+/Users/arapeterson/Desktop/Databases/HW2b/HW2/bin/python /Users/arapeterson/Desktop/Databases/HW2/unit_test_catalog.py
+Running save core definition
+Q =  insert into csvtables values(%s, %s)
+
+Process finished with exit code 0
+-----------------------------------------------------------------------------------
+
+column_name_failure_test()
+/Users/arapeterson/Desktop/Databases/HW2b/HW2/bin/python /Users/arapeterson/Desktop/Databases/HW2/unit_test_catalog.py
+Traceback (most recent call last):
+issue!!
+  File "/Users/arapeterson/Desktop/Databases/HW3/unit_test_catalog.py", line 50, in <module>
+    column_name_failure_test()
+  File "/Users/arapeterson/Desktop/Databases/HW3/unit_test_catalog.py", line 45, in column_name_failure_test
+    col = CSVCatalog.ColumnDefinition(None, "text", False)
+  File "/Users/arapeterson/Desktop/Databases/HW3/CSVCatalog.py", line 37, in __init__
+    raise ValueError('You must have a column name!!')
+ValueError: You must have a column name!!
+
+Process finished with exit code 1
+
+-----------------------------------------------------------------------------------
+
+
+
