@@ -3,9 +3,10 @@ import CSVCatalog
 import json
 import csv
 
-#Must clear out all tables in CSV Catalog schema before using if there are any present
-#Please change the path name to be whatever the path to the CSV files are
-#First methods set up metadata!! Very important that all of these be run properly
+
+# Must clear out all tables in CSV Catalog schema before using if there are any present
+# Please change the path name to be whatever the path to the CSV files are
+# First methods set up metadata!! Very important that all of these be run properly
 
 # Only need to run these if you made the tables already in your CSV Catalog tests
 # You will not need to include the output in your submission as executing this is not required
@@ -16,57 +17,65 @@ def drop_tables_for_prep():
     cat.drop_table("batting")
     cat.drop_table("appearances")
 
-#drop_tables_for_prep()
+
+# drop_tables_for_prep()
 
 # Implementation is provided
 # You will need to update these with the correct path
 def create_lahman_tables():
     cat = CSVCatalog.CSVCatalog()
     cat.create_table("people", "/Users/arapeterson/Desktop/Databases/HW2/People.csv")
-    cat.create_table("batting","/Users/arapeterson/Desktop/Databases/HW2/Batting.csv")
+    cat.create_table("batting", "/Users/arapeterson/Desktop/Databases/HW2/Batting.csv")
     cat.create_table("appearances", "/Users/arapeterson/Desktop/Databases/HW2/Appearances.csv")
 
-#create_lahman_tables()
+
+# create_lahman_tables()
 
 # Note: You can default all column types to text
 def update_people_columns():
-    # ************************ TO DO ***************************
+    # TODO: My changes here
     pass
 
-#update_people_columns()
+
+# update_people_columns()
 
 def update_appearances_columns():
-    # ************************ TO DO ***************************
+    # TODO: My changes here
     pass
 
-#update_appearances_columns()
+
+# update_appearances_columns()
 
 def update_batting_columns():
-    # ************************ TO DO ***************************
+    # TODO: My changes here
     pass
 
-#update_batting_columns()
 
-#Add primary key indexes for people, batting, and appearances in this test
+# update_batting_columns()
+
+# Add primary key indexes for people, batting, and appearances in this test
 def add_index_definitions():
-    # ************************ TO DO ***************************
+    # TODO: My changes here
     pass
 
-#add_index_definitions()
+
+# add_index_definitions()
 
 
 def test_load_info():
     table = CSVTable.CSVTable("people")
     print(table.__description__.file_name)
 
-#test_load_info()
+
+# test_load_info()
 
 def test_get_col_names():
     table = CSVTable.CSVTable("people")
     names = table.__get_column_names__()
     print(names)
 
-#test_get_col_names()
+
+# test_get_col_names()
 
 def add_other_indexes():
     """
@@ -76,16 +85,18 @@ def add_other_indexes():
     Appearances: None that are too important right now
     :return:
     """
-    # ************************ TO DO ***************************
+    # TODO: My changes here
     pass
 
-#add_other_indexes()
+
+# add_other_indexes()
 
 def load_test():
     batting_table = CSVTable.CSVTable("batting")
     print(batting_table)
 
-#load_test()
+
+# load_test()
 
 
 def dumb_join_test():
@@ -96,7 +107,7 @@ def dumb_join_test():
     print(result)
 
 
-#dumb_join_test()
+# dumb_join_test()
 
 
 def get_access_path_test():
@@ -106,23 +117,26 @@ def get_access_path_test():
     print(index_result)
     print(count)
 
-#get_access_path_test()
+
+# get_access_path_test()
 
 def sub_where_template_test():
-    # ************************ TO DO ***************************
+    # TODO: My changes here
     pass
 
-#sub_where_template_test()
+
+# sub_where_template_test()
 
 
 def test_find_by_template_index():
-    # ************************ TO DO ***************************
+    # TODO: My changes here
     pass
 
-#test_find_by_template_index()
+
+# test_find_by_template_index()
 
 def smart_join_test():
-    # ************************ TO DO ***************************
+    # TODO: My changes here
     pass
 
-#smart_join_test()
+# smart_join_test()

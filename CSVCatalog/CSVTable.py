@@ -131,7 +131,6 @@ class CSVTable:
 
                     self.__add_row__(projected_r)
 
-
         except IOError as e:
             raise DataTableExceptions.DataTableException(
                 code=DataTableExceptions.DataTableException.invalid_file,
@@ -161,7 +160,7 @@ class CSVTable:
 
         There is a general overview of the function provided that you can use as guidance when implementing this method.
 
-        :param tmp: Query template.
+        :param fields: Query template.
         :return: Two values, the index and the count, or none and None
         """
         # Do some initial error checking to make sure there are indexes for the table and there are fields passed
@@ -173,7 +172,35 @@ class CSVTable:
 
         # Return the most selective index with its count or None and None
 
-        # ************************ TO DO ***************************
+        # TODO: My changes here
+        if fields is None:
+            return None, None
+        if self.__description__.indexes is None or not self.__description__.indexes:
+            return None, None
+        if self.__indexes__ is None:
+            return None, None
+
+        result, count = None, None
+        fields = set(fields)
+
+        indexes = self.__description__.indexes
+
+        for index in indexes:
+            column_names = index.column_names
+            column_names = set(column_names)
+
+            if column_names.issubset(fields):
+                # find the one with most distinct entries
+                if result is None:
+                    result = index.index_name
+                    count = len(self.__indexes__[result])
+                else:
+                    if count < len(self.__indexes__[result]):
+                        result = index.index_name
+                        count = len(self.__indexes__[result])
+
+        return result, count
+
 
     def matches_template(self, row, t):
         """
@@ -239,8 +266,18 @@ class CSVTable:
         :param fields: The list of fields (project fields)
         :return: New table containing the result of the select and project.
         """
+        # TODO: My changes here
+        if self.__rows__ is None:
+            return None
 
-        # ************************ TO DO ***************************
+        result = []
+        for row in self.__rows__:
+            if self.matches_template(row, t):
+                result.append(row)
+
+        result = self.project(result, fields)
+
+        return result
 
     def __find_by_template_index__(self, t, idx_name, fields=None):
         """
@@ -256,7 +293,7 @@ class CSVTable:
         :param fields: Fields to return. #deciding not to push
         :return: Matching tuples.
         """
-        # ************************ TO DO ***************************
+        # TODO: My changes Here
 
     def __find_by_template__(self, template, fields=None, limit=None, offset=None):
         """
@@ -343,7 +380,7 @@ class CSVTable:
         :param project_fields: List of fields to return from the result.
         :return: List of dictionary elements, each representing a row.
         """
-        # ************************ TO DO ***************************
+        # TODO: My changes here
 
     def __get_sub_where_template__(self, where_template):
         """

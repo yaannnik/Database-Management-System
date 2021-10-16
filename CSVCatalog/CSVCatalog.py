@@ -211,8 +211,8 @@ class TableDefinition:
         # TODO: My changes here
         print("Running load indexes")
 
-        q = "select * from csvtableindexes where table_name = '" + self.table_name + "' " + \
-            "group by index_name, id, table_name, kind, column_name order by key_column_order"
+        q = "select * from csvindexes where table_name = '" + self.table_name + "' " + \
+            "group by index_name, table_name, type, column_name, index_order order by index_order"
         results = run_q(self.cnx, q, None, fetch=True)
 
         indexes_ = {}
@@ -229,7 +229,7 @@ class TableDefinition:
                 record.index_type = result["type"]
                 indexes_[result["index_name"]] = record
 
-        self.indexes = indexes_.values() if len(indexes_.values()) > 0 else None
+        self.indexes = list(indexes_.values())[:] if len(indexes_.values()) > 0 else None
 
     def load_core_definition(self):
         """
@@ -243,7 +243,7 @@ class TableDefinition:
         q = "select * from csvtables where table_name = '" + self.table_name + "'"
         results = run_q(self.cnx, q, None, fetch=True)
 
-        self.file_name = results[0]["file_name"]
+        self.file_name = results[0]["path"] if len(results) > 0 else None
 
     def save_core_definition(self):
         """
@@ -335,8 +335,8 @@ class TableDefinition:
         if self.indexes is not None:
             print("in the index if statement")
             result['indexes'] = []
-        for idx in self.indexes:
-            result['indexes'].append(idx.to_json())
+            for idx in self.indexes:
+                result['indexes'].append(idx.to_json())
         return result
 
     def save_index_definition(self, i_name, cols, kind):
@@ -357,7 +357,7 @@ class TableDefinition:
             v = (self.table_name, cols[i].column_name, kind, i_name, str(i))
             result = run_q(self.cnx, q, v, fetch=False)
 
-    def define_index(self, index_name, columns, kind="index"):
+    def define_index(self, index_name, columns, kind="INDEX"):
         """
         Define or replace and index definition.
         Should update the self.indexes variable.
@@ -379,9 +379,14 @@ class TableDefinition:
         else:
             self.indexes = []
 
+        cols = []
+        for column in self.columns:
+            if column.column_name in columns:
+                cols.append(column)
         self.save_index_definition(i_name=index_name,
-                                   cols=columns,
+                                   cols=cols,
                                    kind=kind)
+
         index = IndexDefinition(index_name=index_name,
                                 index_type=kind,
                                 column_names=columns)
@@ -418,10 +423,11 @@ class TableDefinition:
             "and index_name = '" + index_name + "'"
         run_q(self.cnx, q, None, fetch=False)
 
-        for index in reversed(self.indexes):
-            if index.index_name == index_name:
-                self.indexes.remove(index)
-                break
+        if self.indexes is not None:
+            for index in reversed(self.indexes):
+                if index.index_name == index_name:
+                    self.indexes.remove(index)
+                    break
 
     def drop_indx_in_sql(self, index_name):
         """
