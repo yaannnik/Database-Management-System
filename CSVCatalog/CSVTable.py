@@ -201,7 +201,6 @@ class CSVTable:
 
         return result, count
 
-
     def matches_template(self, row, t):
         """
         A helper function that returns True if the row matches the template.
@@ -294,6 +293,34 @@ class CSVTable:
         :return: Matching tuples.
         """
         # TODO: My changes Here
+        index_definition = None
+
+        if self.__description__.indexes is None:
+            return None
+        else:
+            definitions = self.__description__.indexes
+            for definition in definitions:
+                if definition.index_name == idx_name:
+                    index_definition = definition
+
+        # value_string = "value(1)_value(2)_..._value(n)"
+        if index_definition is not None:
+            value_string = self.__get_key__(index_definition, t)
+            index_rows = self.__indexes__[idx_name].get(value_string, None)
+        else:
+            return None
+
+        if index_rows is None:
+            return None
+
+        result = []
+        for row in index_rows:
+            if self.matches_template(row, t):
+                result.append(row)
+        if fields is not None:
+            result = self.project(result, fields)
+
+        return result
 
     def __find_by_template__(self, template, fields=None, limit=None, offset=None):
         """
@@ -318,7 +345,7 @@ class CSVTable:
             result_rows = self.__find_by_template_scan__(template, fields)
 
         else:
-            result_index, count = self.__get_access_path__(template)
+            result_index, count = self.__get_access_path__(list(template.values())[:])
             if result_index is not None:
                 result_rows = self.__find_by_template_index__(template, result_index, fields)
             else:

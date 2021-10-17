@@ -221,7 +221,7 @@ class TableDefinition:
             if result["index_name"] not in indexes_.keys():
                 index_definition = IndexDefinition(index_name=result["index_name"],
                                                    index_type=result["type"],
-                                                   column_names=result["column_name"])
+                                                   column_names=[result["column_name"]])
                 indexes_[result["index_name"]] = index_definition
             else:
                 record = indexes_[result["index_name"]]
@@ -472,7 +472,7 @@ class CSVCatalog:
         pass
 
     def create_table(self, table_name, file_name, column_definitions=None, primary_key_columns=None):
-        result = TableDefinition(table_name, file_name, cnx=self.cnx)
+        result = TableDefinition(table_name, file_name, column_definitions, cnx=self.cnx)
         return result
 
     def drop_table(self, table_name):
