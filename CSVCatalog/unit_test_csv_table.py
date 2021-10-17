@@ -26,6 +26,7 @@ def reset_db():
     q = "delete from csvtables"
     res = CSVCatalog.run_q(conn, q, args=None, fetch=True)
 
+
 # Only need to run these if you made the tables already in your CSV Catalog tests
 # You will not need to include the output in your submission as executing this is not required
 # Implementation is provided
@@ -179,6 +180,8 @@ def sub_where_template_test():
     # TODO: My changes here
     tab = CSVTable.CSVTable("people")
     template = {"nameFirst": "Hank", "nameSecond": "whatever", "nameLast": "Aaron"}
+    template = tab.__get_sub_where_template__(template)
+    print(template)
 
 
 # sub_where_template_test()
@@ -188,25 +191,44 @@ def test_find_by_template_index():
     tab = CSVTable.CSVTable("people")
     template = {"nameFirst": "Hank", "nameLast": "Aaron"}
     result = tab.__find_by_template_index__(template, "name_index")
-    print(result)
+    print(json.dump(result, indent=2))
 
 
 # test_find_by_template_index()
 
 def smart_join_test():
     # TODO: My changes here
-    pass
+    batting_table = CSVTable.CSVTable("batting")
+    appearances_table = CSVTable.CSVTable("appearances")
+    result = batting_table.__smart_join__(appearances_table, ["playerID", "yearID"], {"playerID": "baxtemi01"},
+                                     ["playerID", "yearID", "teamID", "AB", "H", "G_all", "G_batting"])
+    print(result)
 
 
 # smart_join_test()
 
-# TODO: My test here
+# # TODO: My test here
+print("Reset database")
 reset_db()
+print("Drop tables for preparation")
 drop_tables_for_prep()
+print("Create lahman's baseball database tables")
 create_lahman_tables()
-add_index_definitions()
-test_load_info()
-test_get_col_names()
-add_other_indexes()
-get_access_path_test()
-test_find_by_template_index()
+# print("Add primary index for primary key")
+# add_index_definitions()
+# print("Test loading table info")
+# test_load_info()
+# print("Test getting table column names")
+# test_get_col_names()
+# print("Test Adding other indexes")
+# add_other_indexes()
+# print("Test getting access path")
+# get_access_path_test()
+# print("Test finding by template with index")
+# test_find_by_template_index()
+# print("Test sub where template")
+# sub_where_template_test()
+# print("Test loading data")
+# load_test()
+print("Test dumb join")
+dumb_join_test()

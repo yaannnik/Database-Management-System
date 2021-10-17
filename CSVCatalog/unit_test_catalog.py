@@ -223,6 +223,6 @@ def column_failure_tests():
         print("An error happened: ", e)
 
 
-table_test()
-column_and_index_test()
-column_failure_tests()
+# table_test()
+# column_and_index_test()
+# column_failure_tests()

@@ -63,21 +63,22 @@ class CSVTable:
         self.__rows__.append(row)
         defined_indexes = self.__description__.indexes
 
-        for index in defined_indexes:
+        if defined_indexes is not None:
+            for index in defined_indexes:
 
-            name = index.index_name
+                name = index.index_name
 
-            key_string = self.__get_key__(index,
-                                          row)  # returns a string that is the concatentated version for the index
+                key_string = self.__get_key__(index,
+                                              row)  # returns a string that is the concatentated version for the index
 
-            if key_string in self.__keys_added__:
-                # means that key index already exists, row must be added to the list of rows
-                self.__indexes__[name][key_string].append(row)
-            else:
+                if key_string in self.__keys_added__:
+                    # means that key index already exists, row must be added to the list of rows
+                    self.__indexes__[name][key_string].append(row)
+                else:
 
-                self.__indexes__[name][key_string] = []
-                self.__indexes__[name][key_string].append(row)
-                self.__keys_added__.append(key_string)
+                    self.__indexes__[name][key_string] = []
+                    self.__indexes__[name][key_string].append(row)
+                    self.__keys_added__.append(key_string)
         return
 
     def __get_key__(self, index, row):
@@ -109,8 +110,10 @@ class CSVTable:
         self.__indexes__ = {}  # initialized indexes dictionary
         given_indexes = self.__description__.indexes
         self.__keys_added__ = []
-        for index in given_indexes:
-            self.__indexes__[index.index_name] = {}  # creates a dictionary for all the index:row values to go in
+
+        if given_indexes is not None:
+            for index in given_indexes:
+                self.__indexes__[index.index_name] = {}  # creates a dictionary for all the index:row values to go in
 
         try:
             fn = self.__get_file_name__()
@@ -387,7 +390,8 @@ class CSVTable:
         join_result = self.__table_from_rows__("JOIN:" + left_r.__table_name__ + ":" + right_r.__table_name__,
                                                result_rows)
         result = join_result.__find_by_template__(template=where_template,
-                                                  fields=project_fields)  # join table won't have indexes so it will use template_scan
+                                                  fields=project_fields)
+        # join table won't have indexes so it will use template_scan
         final_table = self.__table_from_rows__(
             "Filtered JOIN(" + self.__table_name__ + "," + right_r.__table_name__ + ")", result)
         return final_table
@@ -408,6 +412,39 @@ class CSVTable:
         :return: List of dictionary elements, each representing a row.
         """
         # TODO: My changes here
+        # get columns to return
+        # scan: left; find: right
+        left_r = self
+        scan_sub_template = left_r.__get_sub_where_template__(where_template)
+        find_sub_template = right_r.__get_sub_where_template__(where_template)
+        scan_rows = left_r.__find_by_template__(scan_sub_template)
+
+        result_rows = []
+
+        left_rows_processed = 0
+        for scan_row in scan_rows:
+            on_template = left_r.__get_on_template__(scan_row, on_fields)
+            if find_sub_template is not None:
+                find_template = {**on_template, **find_sub_template}
+            else:
+                find_template = {on_template}
+
+            find_rows = right_r.__find_by_template__(find_template)
+            if find_rows is not None and len(find_rows) > 0:
+                for find_row in find_rows:
+                    result_rows.append({**scan_row, **find_row})
+            left_rows_processed += 1
+            if left_rows_processed % 10 == 0:
+                print("Processed", left_rows_processed, "left rows.")
+
+        join_result = self.__table_from_rows__("JOIN:" + left_r.__table_name__ + ":" + right_r.__table_name__,
+                                               result_rows)
+        result = join_result.__find_by_template__(template=where_template,
+                                                  fields=project_fields)
+        # join table won't have indexes so it will use template_scan
+        final_table = self.__table_from_rows__(
+            "Filtered JOIN(" + self.__table_name__ + "," + right_r.__table_name__ + ")", result)
+        return final_table
 
     def __get_sub_where_template__(self, where_template):
         """
