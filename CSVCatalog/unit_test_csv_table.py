@@ -207,7 +207,7 @@ def smart_join_test():
 
 # smart_join_test()
 
-# # TODO: My test here
+# TODO: My test here
 # print("Reset database")
 # reset_db()
 # print("Drop tables for preparation")
