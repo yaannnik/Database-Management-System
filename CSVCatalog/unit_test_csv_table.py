@@ -156,10 +156,10 @@ def load_test():
 
 
 def dumb_join_test():
-    batting_table = CSVTable.CSVTable("batting")
+    batting_table = CSVTable.CSVTable("people")
     appearances_table = CSVTable.CSVTable("appearances")
-    result = batting_table.dumb_join(appearances_table, ["playerID", "yearID"], {"playerID": "baxtemi01"},
-                                     ["playerID", "yearID", "teamID", "AB", "H", "G_all", "G_batting"])
+    result = batting_table.dumb_join(appearances_table, ["playerID"], {"playerID": "baxtemi01"},
+                                     ["playerID", "yearID", "teamID", "nameFirst", "nameLast", "G_all"])
     print(result)
 
 
@@ -191,29 +191,29 @@ def test_find_by_template_index():
     tab = CSVTable.CSVTable("people")
     template = {"nameFirst": "Hank", "nameLast": "Aaron"}
     result = tab.__find_by_template_index__(template, "name_index")
-    print(json.dump(result, indent=2))
+    print(json.dumps(result, indent=2))
 
 
 # test_find_by_template_index()
 
 def smart_join_test():
     # TODO: My changes here
-    batting_table = CSVTable.CSVTable("batting")
+    batting_table = CSVTable.CSVTable("people")
     appearances_table = CSVTable.CSVTable("appearances")
-    result = batting_table.__smart_join__(appearances_table, ["playerID", "yearID"], {"playerID": "baxtemi01"},
-                                     ["playerID", "yearID", "teamID", "AB", "H", "G_all", "G_batting"])
+    result = batting_table.__smart_join__(appearances_table, ["playerID"], {"playerID": "baxtemi01"},
+                                     ["playerID", "yearID", "teamID", "nameFirst", "nameLast", "G_all"])
     print(result)
 
 
 # smart_join_test()
 
 # # TODO: My test here
-print("Reset database")
-reset_db()
-print("Drop tables for preparation")
-drop_tables_for_prep()
-print("Create lahman's baseball database tables")
-create_lahman_tables()
+# print("Reset database")
+# reset_db()
+# print("Drop tables for preparation")
+# drop_tables_for_prep()
+# print("Create lahman's baseball database tables")
+# create_lahman_tables()
 # print("Add primary index for primary key")
 # add_index_definitions()
 # print("Test loading table info")
@@ -230,5 +230,7 @@ create_lahman_tables()
 # sub_where_template_test()
 # print("Test loading data")
 # load_test()
-print("Test dumb join")
-dumb_join_test()
+# print("Test dumb join")
+# dumb_join_test()
+# print("Test smart join")
+# smart_join_test()
