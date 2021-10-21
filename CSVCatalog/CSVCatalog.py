@@ -159,7 +159,7 @@ class TableDefinition:
 
             if index_definitions is not None:
                 for idx in index_definitions:
-                    self.define_index(idx)
+                    self.define_index(idx.index_name, idx.column_names, idx.index_type)
 
         else:
             # All three methods you must implement.
