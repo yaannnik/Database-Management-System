@@ -384,7 +384,7 @@ class CSVTable:
                     new_r = {**lr, **rr}  # appends two dictionaries together
                     result_rows.append(new_r)
             left_rows_processed += 1
-            if left_rows_processed % 10 == 0:
+            if left_rows_processed % 1000 == 0:
                 print("Processed", left_rows_processed, "left rows.")
 
         join_result = self.__table_from_rows__("JOIN:" + left_r.__table_name__ + ":" + right_r.__table_name__,
@@ -434,7 +434,7 @@ class CSVTable:
                 for find_row in find_rows:
                     result_rows.append({**scan_row, **find_row})
             left_rows_processed += 1
-            if left_rows_processed % 10 == 0:
+            if left_rows_processed % 1000 == 0:
                 print("Processed", left_rows_processed, "left rows.")
 
         join_result = self.__table_from_rows__("JOIN:" + left_r.__table_name__ + ":" + right_r.__table_name__,
