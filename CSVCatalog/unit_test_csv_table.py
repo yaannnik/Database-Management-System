@@ -101,13 +101,13 @@ def add_index_definitions():
     # TODO: My changes here
     cat = CSVCatalog.CSVCatalog()
     t = cat.get_table("people")
-    t.define_index("primary_index", ["playerID"], "PRIMARY")
+    t.define_index("PK_people", ["playerID"], "PRIMARY")
 
     t = cat.get_table("batting")
-    t.define_index("primary_index", ["playerID"], "PRIMARY")
+    t.define_index("PK_batting", ["stint", "yearID"], "PRIMARY")
 
     t = cat.get_table("appearances")
-    t.define_index("primary_index", ["playerID"], "PRIMARY")
+    t.define_index("PK_appearance", ["yearID", "teamID", "playerID"], "PRIMARY")
 
 
 # add_index_definitions()
@@ -139,10 +139,10 @@ def add_other_indexes():
     # TODO: My changes here
     cat = CSVCatalog.CSVCatalog()
     t = cat.get_table("people")
-    t.define_index("name_index", ["nameLast", "nameFirst"], "INDEX")
+    t.define_index("last_first", ["nameLast", "nameFirst"], "INDEX")
 
-    t = cat.get_table("appearances")
-    t.define_index("team_index", ["teamID"], "INDEX")
+    t = cat.get_table("batting")
+    t.define_index("TeamID", ["teamID"], "INDEX")
 
 
 # add_other_indexes()
@@ -190,7 +190,7 @@ def sub_where_template_test():
 def test_find_by_template_index():
     tab = CSVTable.CSVTable("people")
     template = {"nameFirst": "Hank", "nameLast": "Aaron"}
-    result = tab.__find_by_template_index__(template, "name_index")
+    result = tab.__find_by_template_index__(template, "last_first")
     print(json.dumps(result, indent=2))
 
 

@@ -373,6 +373,10 @@ class TableDefinition:
 
         if self.indexes is not None:
             for index in self.indexes:
+                # for column in columns:
+                #     if column in index.column_names:
+                #         raise Exception("Duplicate column-index definition")
+
                 if index.index_name == index_name:
                     self.drop_index(index_name)
                     break
