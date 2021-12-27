@@ -25,3 +25,21 @@ COMS-W4111@Columbia University. The whole project implemented a CSV based Databa
 
 
 6 directories, 20 files
+.
+├── data
+│   ├── Baseball
+│   │   ├── .DS_Store
+│   │   ├── Appearances.csv
+│   │   ├── Batting.csv
+│   │   ├── People.csv
+│   │   └── Pitching.csv
+│   └── __init__.py
+├── src
+│   ├── BaseDataTable.py
+│   ├── CSVDataTable.py
+│   └── __init__.py
+└── tests
+    ├── __init__.py
+    └── csv_table_tests.py
+
+6 directories, 20 files
