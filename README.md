@@ -3,43 +3,26 @@ COMS-W4111@Columbia University. The whole project implemented a CSV based Databa
 
 ## CSVTable
 
-.
-├── data
-│   ├── Baseball
-│   │   ├── Appearances.csv
-│   │   ├── Batting.csv
-│   │   ├── People.csv
-│   │   └── Pitching.csv
-│   └── __init__.py
-├── src
-│   ├── BaseDataTable.py
-│   ├── CSVDataTable.py
-│   └── __init__.py
-└── tests
-    ├── __init__.py
-    └── csv_table_tests.py
 
 `CSVTable` implements methods that 
 
 ## CSVCatalog.
 
-
-6 directories, 20 files
-.
-├── data
-│   ├── Baseball
-│   │   ├── .DS_Store
-│   │   ├── Appearances.csv
-│   │   ├── Batting.csv
-│   │   ├── People.csv
-│   │   └── Pitching.csv
-│   └── __init__.py
-├── src
-│   ├── BaseDataTable.py
-│   ├── CSVDataTable.py
-│   └── __init__.py
-└── tests
-    ├── __init__.py
-    └── csv_table_tests.py
-
-6 directories, 20 files
+./CSVCatalog\
+├── HW3 README\
+├── data\
+│   ├── Appearances.csv\
+│   ├── Batting.csv\
+│   ├── People.csv\
+│   └── create.sql\
+├── src\
+│   ├── CSVCatalog.py\
+│   ├── CSVTable.py\
+│   ├── DataTableExceptions.py\
+│   └── __init__.py\
+└── test
+    ├── __init__.py\
+    ├── unit_test_catalog.py\
+    ├── unit_test_catalog.txt\
+    ├── unit_test_csv_table.py\
+    └── unit_test_csv_table.txt\
