@@ -1,4 +1,4 @@
-import CSVCatalog
+import src.CSVCatalog as CSVCatalog
 import json
 import pymysql
 

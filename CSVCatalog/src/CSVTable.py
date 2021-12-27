@@ -2,8 +2,8 @@ import csv  # Python package for reading and writing CSV files.
 import tabulate
 
 # You MAY have to modify the path to match your project's structure.
-import DataTableExceptions
-import CSVCatalog
+import src.DataTableExceptions as DataTableExceptions
+import src.CSVCatalog as CSVCatalog
 
 # We won't use this but feel free to implement!
 max_rows_to_print = 10

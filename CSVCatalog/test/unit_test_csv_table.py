@@ -1,5 +1,5 @@
-import CSVTable
-import CSVCatalog
+import src.CSVTable as CSVTable
+import src.CSVCatalog as CSVCatalog
 import json
 import csv
 import pandas as pd
